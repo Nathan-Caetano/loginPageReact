@@ -92,6 +92,7 @@ form {
 }
 
 #form-bottom button{
+  cursor: pointer;
   width: 290px;
   background-color: var(--dark-blue);
   color: var(--gray-font);
