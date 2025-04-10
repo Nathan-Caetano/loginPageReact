@@ -3,30 +3,38 @@ import './App.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
-function App() {
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-  const [reSenha, setReSenha] = useState("");
-  const [showErrors, setShowErrors] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+const EmailIcon = () => <FontAwesomeIcon icon={faEnvelope} style={{ color: "#41456C", }} />
+const PasswordEye = () => <FontAwesomeIcon icon={faEye} style={{ color: "#41456c", }} />
+const PasswordSlashEye = () => <FontAwesomeIcon icon={faEyeSlash} style={{ color: "#41456c", }} />
 
-  const emailIcon = <FontAwesomeIcon icon={faEnvelope} style={{color: "#41456C",}}/>
-  const passwordEye = <FontAwesomeIcon icon={faEye} style={{color: "#41456c",}} />
-  const passwordSlashEye = <FontAwesomeIcon icon={faEyeSlash} style={{color: "#41456c",}}/>
+const initialState = {
+  email: '',
+  senha: '',
+  confirmarSenha: '',
+  shouldShowError: false,
+  shouldShowPassword: false,
+}
+
+function App() {
+
+  const [localState, setLocalState] = useState(initialState);
+
+  const handleLocalState = (key, value) => {
+    setLocalState(prev => ({ ...prev, [key]: value }))
+  }
 
   const togglePassword = () => {
-    setShowPassword((prev) => !prev)
+    setLocalState(prev => ({ ...prev, shouldShowPassword: !prev.shouldShowPassword }))
   };
 
-  function cadastrar(e) {
+  const isFormValid = () => {
+    return localState.email && localState.senha && localState.reSenha
+  }
+
+  const cadastrar = (e) => {
     e.preventDefault();
-
-    if (!email || !senha || !reSenha) {
-      setShowErrors(true);
-      return;
-    }
-
-    setShowErrors(false);
+    handleLocalState('shouldShowError', !isFormValid());
+    if (!isFormValid()) return 
   };
 
   return (
@@ -41,48 +49,50 @@ function App() {
             <div className="ipt">
               <input
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={localState.email}
+                onChange={(e) => handleLocalState('email', e.target.value)}
                 id="userEmail"
                 placeholder='exemplo@gmail.com'
               />
-              <label htmlFor="userEmail">{emailIcon}</label>
+              <label htmlFor="userEmail">
+                <EmailIcon/>
+              </label>
             </div>
-              {showErrors && !email && (
-                <label htmlFor="userEmail" className='show-label'>*Campo obrigatório</label>
-              )}
+            {localState.shouldShowError && !localState.email && (
+              <label htmlFor="userEmail" className='show-label'>*Campo obrigatório</label>
+            )}
           </div>
           <div className="campo">
             <div className="ipt">
               <input
-                type={showPassword ? "text" : "password"}
-                value={senha}
-                onChange={(e) => setSenha(e.target.value)}
+                type={localState.shouldShowPassword ? "text" : "password"}
+                value={localState.senha}
+                onChange={(e) => handleLocalState('senha', e.target.value)}
                 id='password'
                 placeholder='Senha'
               />
               <button type='button' onClick={togglePassword} className='eye-btn'>
-                {showPassword ? passwordSlashEye : passwordEye}
+                {localState.shouldShowPassword ? <PasswordSlashEye/> : <PasswordEye/>}
               </button>
             </div>
-            {showErrors && !senha && (
+            {localState.shouldShowError && !localState.senha && (
               <label htmlFor="password" className='show-label'>*Campo obrigatório</label>
             )}
           </div>
           <div className="campo">
             <div className="ipt">
               <input
-                type={showPassword ? "text" : "password"}
-                value={reSenha}
-                onChange={(e) => setReSenha(e.target.value)}
+                type={localState.shouldShowPassword ? "text" : "password"}
+                value={localState.confirmarSenha}
+                onChange={(e) =>  handleLocalState('confirmarSenha', e.target.value)}
                 id="rePassword"
                 placeholder='Confirmar senha'
               />
               <button type='button' onClick={togglePassword} className='eye-btn'>
-                {showPassword ? passwordSlashEye : passwordEye}
+                {localState.shouldShowPassword ? <PasswordSlashEye/> : <PasswordEye/>}
               </button>
             </div>
-            {showErrors && !reSenha && (
+            {localState.shouldShowError && !localState.confirmarSenha && (
               <label htmlFor="rePassword" className='show-label'>*Campo obrigatório</label>
             )}
           </div>
