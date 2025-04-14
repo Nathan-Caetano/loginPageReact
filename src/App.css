@@ -92,11 +92,12 @@ form {
 }
 
 #form-bottom button{
+  font-weight: bold;
   cursor: pointer;
   width: 290px;
   background-color: var(--dark-blue);
   color: var(--gray-font);
-  font-size: 15px;
+  font-size: 16px;
   border: 0;
   border-radius: 5px;
   height: 40px;
@@ -105,13 +106,16 @@ form {
 }
 
 #form-bottom button:hover {
-  background-color: var(--gray-font);
-  color: var(--dark-blue);
   transform: translateY(-7px);
+  box-shadow: 0px 7px 10px rgb(52, 52, 52);
+  transition: ease 0.1s;
 }
 
 #form-bottom button:active{
+  background-color: var(--gray-font);
+  color: var(--dark-blue);
   transform: translateY(-1px);
+  box-shadow: none;
 }
 
 #form-bottom p {
