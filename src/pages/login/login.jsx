@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import '../../App.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { faAward, faEnvelope, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 
 const EmailIcon = () => <FontAwesomeIcon icon={faEnvelope} style={{ color: "#41456C", }} />
@@ -31,10 +31,27 @@ function Login () {
       return localState.email && localState.senha
     };
   
-    const logar = (e) => {
+    const logar =  async (e) => {
       e.preventDefault();
       handleLocalState('shouldShowError', !isFormValid());
-      if(!isFormValid()) return
+      if(!isFormValid()) {
+        return
+      }
+
+      try {
+        const response = await fetch(`http://localhost:3000/login/${localState.email}/${localState.senha}`)
+
+        if(!response){
+          throw new Error("erro ao logar")
+        }
+
+        const data = await response.json()
+
+        console.log(data.usuario)
+
+      } catch (err){
+        console.log(`Erro : ${err}`)
+      };
     };
 
     return (

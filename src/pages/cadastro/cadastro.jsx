@@ -3,12 +3,14 @@ import '../../App.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
+import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
 
-const EmailIcon = () => <FontAwesomeIcon icon={faEnvelope} style={{ color: "#41456C", }} />
-const PasswordEye = () => <FontAwesomeIcon icon={faEye} style={{ color: "#41456c", }} />
-const PasswordSlashEye = () => <FontAwesomeIcon icon={faEyeSlash} style={{ color: "#41456c", }} />
+const getIcon = (icon) => {
+  return <FontAwesomeIcon icon={icon} style={{ color: "#41456C", }} />;
+}
 
 const initialState = {
+  name : '',
   email: '',
   senha: '',
   confirmarSenha: '',
@@ -36,7 +38,19 @@ function Cadastro () {
     const cadastrar = (e) => {
       e.preventDefault();
       handleLocalState('shouldShowError', !isFormValid());
-      if(!isFormValid()) return
+      if(!isFormValid()){
+        return
+      }
+
+      //const user = { localState.name };
+
+      //try {
+        //const response = await fetch('http://localhost:3000/usuarios', {
+          //method : 'POST'
+
+
+        //})
+      //}
     };
   
     return (
@@ -46,6 +60,23 @@ function Cadastro () {
             <h1>Cadastro</h1>
           </div>
           <div id="form-ipts">
+            <div className="campo">
+              <div className="ipt">
+                <input
+                    type="name"
+                    value={localState.name}
+                    onChange={(e) => handleLocalState('email', e.target.value)}
+                    id="userName"
+                    placeholder='Seu nome de usuário'
+                  />
+                <label htmlFor="userName">
+                  {getIcon(faUser)}
+                </label>
+              </div>
+              {localState.shouldShowError && !localState.nome && (
+                  <label htmlFor="userName" className='show-label'>*Campo obrigatório</label>
+                )}
+            </div>
             <div className='campo'>
               <div className="ipt">
                 <input
@@ -56,7 +87,7 @@ function Cadastro () {
                   placeholder='exemplo@gmail.com'
                 />
                 <label htmlFor="userEmail">
-                  <EmailIcon/>
+                  {getIcon(faEnvelope)}
                 </label>
               </div>
                 {localState.shouldShowError && !localState.email && (
@@ -73,7 +104,7 @@ function Cadastro () {
                   placeholder='Senha'
                 />
                 <button type='button' onClick={togglePassword} className='eye-btn'>
-                  {localState.shouldShowPassword ? <PasswordSlashEye/> : <PasswordEye/>}
+                  {localState.shouldShowPassword ? getIcon(faEyeSlash) : getIcon(faEye)}
                 </button>
               </div>
               {localState.shouldShowError && !localState.senha && (
@@ -90,7 +121,7 @@ function Cadastro () {
                   placeholder='Confirmar senha'
                 />
                 <button type='button' onClick={togglePassword} className='eye-btn'>
-                  {localState.shouldShowPassword ? <PasswordSlashEye/> : <PasswordEye/>}
+                {localState.shouldShowPassword ? getIcon(faEyeSlash) : getIcon(faEye)}
                 </button>
               </div>
               {localState.shouldShowError && !localState.confirmarSenha && (
