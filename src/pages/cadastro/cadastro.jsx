@@ -10,12 +10,13 @@ const getIcon = (icon) => {
 }
 
 const initialState = {
-  name : '',
+  nome : '',
   email: '',
   senha: '',
   confirmarSenha: '',
   shouldShowError: false,
   shouldShowPassword: false,
+  shouldShowPasswordError: false,
 };
 
 
@@ -32,25 +33,49 @@ function Cadastro () {
     };
   
     const isFormValid = () => {
-      return localState.email && localState.senha && localState.confirmarSenha
+      return localState.nome && localState.email && localState.senha && localState.confirmarSenha
     };
-  
-    const cadastrar = (e) => {
+
+    const passwordIsValid = () => {
+      if(localState.confirmarSenha !== localState.senha) {
+        console.log("As senhas são diferentes")
+        return false
+      } else {
+        return true
+      }
+    }
+
+    const cadastrar = async (e) => {
       e.preventDefault();
       handleLocalState('shouldShowError', !isFormValid());
-      if(!isFormValid()){
-        return
+    
+      if (!isFormValid()) return;
+      if (!passwordIsValid()) return;
+    
+      try {
+        const response = await fetch('http://localhost:3000/usuarios', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            nome: localState.nome,
+            email: localState.email,
+            senha: localState.senha
+          })
+        });
+    
+        if (!response.ok) {
+          console.log("Erro do servidor:", response.status);
+          return;
+        }
+    
+        const data = await response.json();
+        console.log("Usuário cadastrado:", data);
+    
+      } catch (erro) {
+        console.log("Não foi possível se comunicar com o servidor:", erro.message);
       }
-
-      //const user = { localState.name };
-
-      //try {
-        //const response = await fetch('http://localhost:3000/usuarios', {
-          //method : 'POST'
-
-
-        //})
-      //}
     };
   
     return (
@@ -64,8 +89,8 @@ function Cadastro () {
               <div className="ipt">
                 <input
                     type="name"
-                    value={localState.name}
-                    onChange={(e) => handleLocalState('email', e.target.value)}
+                    value={localState.nome}
+                    onChange={(e) => handleLocalState('nome', e.target.value)}
                     id="userName"
                     placeholder='Seu nome de usuário'
                   />
