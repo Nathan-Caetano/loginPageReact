@@ -16,7 +16,7 @@ const initialState = {
   confirmarSenha: '',
   shouldShowError: false,
   shouldShowPassword: false,
-  shouldShowPasswordError: false,
+  shouldShowPasswordMismatch: false,
 };
 
 
@@ -37,12 +37,9 @@ function Cadastro () {
     };
 
     const passwordIsValid = () => {
-      if(localState.confirmarSenha !== localState.senha) {
-        console.log("As senhas são diferentes")
-        return false
-      } else {
-        return true
-      }
+      const isValid = localState.confirmarSenha === localState.senha;
+      handleLocalState('shouldShowPasswordMismatch', !isValid);
+      return isValid;
     }
 
     const cadastrar = async (e) => {
@@ -52,7 +49,7 @@ function Cadastro () {
       if (!isFormValid()) return;
       if (!passwordIsValid()) return;
     
-      try {
+      /*try {
         const response = await fetch('http://localhost:3000/usuarios', {
           method: 'POST',
           headers: {
@@ -75,7 +72,7 @@ function Cadastro () {
     
       } catch (erro) {
         console.log("Não foi possível se comunicar com o servidor:", erro.message);
-      }
+      }*/
     };
   
     return (
@@ -141,7 +138,13 @@ function Cadastro () {
                 <input
                   type={localState.shouldShowPassword ? "text" : "password"}
                   value={localState.confirmarSenha}
-                  onChange={(e) => handleLocalState('confirmarSenha', e.target.value)}
+                  onChange={(e) => {
+                    handleLocalState('confirmarSenha', e.target.value);
+                    
+                    if (localState.senha === e.target.value) {
+                      handleLocalState('shouldShowPasswordMismatch', false)
+                    }
+                  }}
                   id="rePassword"
                   placeholder='Confirmar senha'
                 />
@@ -151,6 +154,9 @@ function Cadastro () {
               </div>
               {localState.shouldShowError && !localState.confirmarSenha && (
                 <label htmlFor="rePassword" className='show-label'>*Campo obrigatório</label>
+              )}
+              {localState.shouldShowPasswordMismatch && (
+                <label htmlFor="rePassword" className='show-label'>*As senhas não coincidem</label>
               )}
             </div>
           </div>
