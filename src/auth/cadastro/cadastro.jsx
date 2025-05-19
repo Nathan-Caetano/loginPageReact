@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import '../../App.css'
+import '../auth.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
+import { useNavigate } from 'react-router-dom'
 
 const getIcon = (icon) => {
   return <FontAwesomeIcon icon={icon} style={{ color: "#41456C", }} />;
@@ -21,6 +22,8 @@ const initialState = {
 
 
 function Cadastro () {
+
+    const navigate = useNavigate();
 
     const [localState, setLocalState] = useState(initialState);
 
@@ -49,7 +52,7 @@ function Cadastro () {
       if (!isFormValid()) return;
       if (!passwordIsValid()) return;
     
-      /*try {
+      try {
         const response = await fetch('http://localhost:3000/usuarios', {
           method: 'POST',
           headers: {
@@ -69,10 +72,12 @@ function Cadastro () {
     
         const data = await response.json();
         console.log("Usuário cadastrado:", data);
+
+        navigate('/login')
     
       } catch (erro) {
         console.log("Não foi possível se comunicar com o servidor:", erro.message);
-      }*/
+      }
     };
   
     return (
@@ -162,7 +167,7 @@ function Cadastro () {
           </div>
           <div id="form-bottom">
             <button type='submit'>Confirmar</button>
-            <p>Já tem uma conta?<Link to='/'>Aqui</Link></p>
+            <p>Já tem uma conta?<Link to='/login'>Aqui</Link></p>
             <p>Esqueceu a senha?<Link to='/editar'>Aqui</Link></p>
           </div>
         </form>
