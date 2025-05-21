@@ -82,6 +82,7 @@ function Cadastro () {
   
     return (
         <>
+        <div className="auth-container">
         <form onSubmit={cadastrar}>
           <div id="form-top">
             <h1>Cadastro</h1>
@@ -171,6 +172,7 @@ function Cadastro () {
             <p>Esqueceu a senha?<Link to='/editar'>Aqui</Link></p>
           </div>
         </form>
+        </div>
         </>
     )
 }

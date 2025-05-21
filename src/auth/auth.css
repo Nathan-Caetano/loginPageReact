@@ -1,3 +1,10 @@
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
 form {
     position: relative;
     background-color: #ffffff80;

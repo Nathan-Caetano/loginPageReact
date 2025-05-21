@@ -75,57 +75,59 @@ function Login () {
     }
     return (
         <>
-        <form onSubmit={logar}>
-          <div id="form-top">
-            <h1>Login</h1>
-          </div>
-          <div id="form-ipts">
-            <div className='campo'>
-              <div className="ipt">
-                <input
-                  type="email"
-                  value={localState.email}
-                  onChange={(e) => handleLocalState('email', e.target.value)}
-                  id="userEmail"
-                  placeholder='exemplo@gmail.com'
-                />
-                <label htmlFor="userEmail">
-                  <EmailIcon/>
-                </label>
+        <div className="auth-container">
+          <form onSubmit={logar}>
+            <div id="form-top">
+              <h1>Login</h1>
+            </div>
+            <div id="form-ipts">
+              <div className='campo'>
+                <div className="ipt">
+                  <input
+                    type="email"
+                    value={localState.email}
+                    onChange={(e) => handleLocalState('email', e.target.value)}
+                    id="userEmail"
+                    placeholder='exemplo@gmail.com'
+                  />
+                  <label htmlFor="userEmail">
+                    <EmailIcon/>
+                  </label>
+                </div>
+                  {localState.shouldShowError && !localState.email && (
+                    <label htmlFor="userEmail" className='show-label'>*Campo obrigatório</label>
+                  )}
               </div>
-                {localState.shouldShowError && !localState.email && (
-                  <label htmlFor="userEmail" className='show-label'>*Campo obrigatório</label>
+              <div className="campo">
+                <div className="ipt">
+                  <input
+                    type={localState.shouldShowPassword ? "text" : "password"}
+                    value={localState.senha}
+                    onChange={(e) => handleLocalState('senha', e.target.value)}
+                    id='password'
+                    placeholder='Senha'
+                  />
+                  <button type='button' onClick={togglePassword} className='eye-btn'>
+                    {localState.shouldShowPassword ? <PasswordSlashEye/> : <PasswordEye/>}
+                  </button>
+                </div>
+                {localState.shouldShowError && !localState.senha && (
+                  <label htmlFor="password" className='show-label'>*Campo obrigatório</label>
                 )}
-            </div>
-            <div className="campo">
-              <div className="ipt">
-                <input
-                  type={localState.shouldShowPassword ? "text" : "password"}
-                  value={localState.senha}
-                  onChange={(e) => handleLocalState('senha', e.target.value)}
-                  id='password'
-                  placeholder='Senha'
-                />
-                <button type='button' onClick={togglePassword} className='eye-btn'>
-                  {localState.shouldShowPassword ? <PasswordSlashEye/> : <PasswordEye/>}
-                </button>
               </div>
-              {localState.shouldShowError && !localState.senha && (
-                <label htmlFor="password" className='show-label'>*Campo obrigatório</label>
-              )}
+              <div className='errors'>
+              {localState.errorMensagem && (
+                <label className='show-label'>{localState.errorMensagem}</label>
+              )}  
+              </div>
             </div>
-            <div className='errors'>
-            {localState.errorMensagem && (
-              <label className='show-label'>{localState.errorMensagem}</label>
-            )}  
+            <div id="form-bottom">
+              <button type='submit'>Login</button>
+              <p>Não tem uma conta?<Link to='/cadastro'>Aqui</Link></p>
+              <p>Esqueceu a senha?<Link to='/editar'>Aqui</Link></p>
             </div>
-          </div>
-          <div id="form-bottom">
-            <button type='submit'>Login</button>
-            <p>Não tem uma conta?<Link to='/cadastro'>Aqui</Link></p>
-            <p>Esqueceu a senha?<Link to='/editar'>Aqui</Link></p>
-          </div>
-        </form>
+          </form>
+        </div>
         </>
     )
 }

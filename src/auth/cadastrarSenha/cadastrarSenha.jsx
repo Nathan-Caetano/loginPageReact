@@ -38,8 +38,9 @@ function Editar () {
     };
 
     return (
-        <>
-                <form onSubmit={logar}>
+      <>
+      <div className="auth-container">
+        <form onSubmit={logar}>
           <div id="form-top">
             <h1>Editar Senha</h1>
           </div>
@@ -85,7 +86,8 @@ function Editar () {
             <p>Logar?<Link to='/login'>Aqui</Link></p>
           </div>
         </form>
-        </>
+      </div>
+      </>
     )
 }
 
