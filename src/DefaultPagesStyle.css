@@ -1,0 +1,17 @@
+:root {
+    --dark-blue: #41456c;
+    --gray-font: #B8B9C8;
+    --link-hover: #bcb3fe;
+}
+
+.page-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+main{
+    max-width: 1200px;
+    width: 100%;
+}

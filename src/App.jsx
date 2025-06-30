@@ -7,6 +7,7 @@ import Login from './auth/login/login.jsx';
 import Editar from './auth/cadastrarSenha/cadastrarSenha.jsx';
 import Home from './pages/home/home.jsx';
 import PrivateRoute from './PrivateRoute.jsx';
+import Error from './pages/Error/Error.jsx';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <img src="https://forbes.com.br/wp-content/uploads/2023/08/ABRE-1-768x512.jpg" alt="Background" />
       <BrowserRouter>
         <Routes>
+          <Route path='*' element={<Error/>} />
           <Route path='/cadastro' element={<Cadastro />} />
           <Route path='/login' element={<Login />} />
           <Route path='/editar' element={<Editar />} />
