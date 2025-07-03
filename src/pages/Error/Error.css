@@ -1,0 +1,52 @@
+:root {
+    --dark-blue: #41456c;
+    --gray-font: #B8B9C8;
+    --link-hover: #bcb3fe;
+    --white-bg: #E0E0E0;
+}
+
+main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+    height: 100%;
+}
+
+.container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container h1 {
+    font-size: 100px;
+}
+
+.container h2{
+    font-size: 30px;
+}
+
+.container p {
+    margin-bottom: 30px;
+}
+
+.container button{
+    background-color: var(--dark-blue);
+    color: var(--gray-font);
+    font-weight: bold;
+    padding: 15px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.container button i {
+    margin-left: 5px;
+}
+
+.container button:hover {
+    background-color: var(--link-hover);
+    color: var(--dark-blue);
+}
